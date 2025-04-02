@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepak Suresh - Portfolio</title>
+    <meta name="description" content="Deepak Suresh - Software Development Engineer with expertise in Python, Django, and backend systems.">
+    <meta name="keywords" content="software engineer, backend developer, python, django, portfolio">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #5b21b6;
+            --bg: #f3f4f6;
+            --card-bg: white;
+            --text: #111827;
+            --text-secondary: #4b5563;
+            --text-muted: #6b7280;
+            --skill-bg: #e5e7eb;
+        }
+        
+        .dark-mode {
+            --bg: #0a0a0a;
+            --card-bg: #1f2937;
+            --text: white;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --skill-bg: #374151;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .profile-photo{
+            height: 150px;
+            width:150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+            .header, .contact, .experience, .projects {
+                grid-column: 1 / -1;
+            }
+            .about {
+                grid-row: 2;
+            }
+            .skills {
+                grid-row: 2;
+            }
+        }
+        .header {
+            text-align: center;
+            padding: 1rem 0;
+            position: relative;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0;
+        }
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+        }
+        .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin: 0.5rem 0 1rem;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .social-link {
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        .social-link:hover {
+            color: var(--primary);
+        }
+        section {
+            background-color: var(--card-bg);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0 0 1rem;
+        }
+        .text-gray-300 {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .skill-card {
+            background-color: var(--skill-bg);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        .skill-card:hover {
+            transform: scale(1.05);
+            background-color: var(--primary);
+            color: white;
+        }
+        .experience-card {
+            margin-bottom: 1.5rem;
+        }
+        .experience-card:last-child {
+            margin-bottom: 0;
+        }
+        .experience-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .experience-date {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+        }
+        .experience-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .experience-list li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .experience-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        .highlight {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        .contact-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-radius: 2rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .contact-button:hover {
+            background-color: var(--primary-dark);
+        }
+        .hidden {
+            opacity: 0;
+        }
+        
+        /* New Project Cards */
+        .project-card {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: var(--skill-bg);
+            transition: transform 0.3s;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        .project-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--primary);
+        }
+        .project-tech {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+        }
+        .project-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        
+        /* Theme Toggle */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1.25rem;
+            cursor: pointer;
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 10;
+        }
+        
+        /* Button Group */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-toggle hidden">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <!-- Header Section -->
+        <div style="display:flex;flex-direction:row;justify-content: space-evenly;">
+            <div>
+                <img src="/profile.png" class="profile-photo hidden">
+            </div>
+            <div class="header hidden" id="header">
+                <h1>Deepak Suresh</h1>
+                <p class="subtitle">Software Development Engineer</p>
+                <div class="social-links">
+                    <a href="https://github.com/deepaksuresh2411" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/deepak-suresh-180435197/" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:deepak-developer@outlook.com" class="social-link"><i class="fas fa-envelope"></i></a>
+                    <a href="tel:+919042593542" class="social-link"><i class="fas fa-phone"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- About Section -->
+        <section class="about hidden" id="about">
+            <h2>Who Am I?</h2>
+            <p class="text-gray-300">
+                I'm an experienced Software Engineer with a strong background in backend development. I collaborate
+                with cross-functional teams including product, testing, and design. Despite my primary focus on backend
+                development, I have also contributed to frontend and DevOps tasks, mentored junior developers, and
+                worked closely with senior software engineers and the CTO.
+            </p>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="skills hidden" id="skills">
+            <h2>Tech Stack</h2>
+            <div class="skills-grid">
+                <div class="skill-card">Python</div>
+                <div class="skill-card">Django</div>
+                <div class="skill-card">SQL</div>
+                <div class="skill-card">MongoDB</div>
+                <div class="skill-card">Go</div>
+                <div class="skill-card">Redis</div>
+                <div class="skill-card">Celery</div>
+                <div class="skill-card">Docker</div>
+                <div class="skill-card">Javascript</div>
+                <div class="skill-card">Bash</div>
+                <div class="skill-card">GitHub Actions</div>
+                <div class="skill-card">AWS</div>
+            </div>
+        </section>
+
+        <section class="projects hidden" id="projects">
+            <h2>What I Bring to a Team</h2>
+                <p class="text-gray-300">
+                    I'm <span class="highlight">fast, practical and collaborative</span>. By developing features quickly, I make life easier for my team. When making a decision, I make sure to consider the <span class="highlight">business needs</span>. I'm a person who is <span class="highlight">willing to communicate</span> and <span class="highlight">easily get along</span> with my team, making collaboration easy. I'm always <span class="highlight">open to help my peers</span> when they need support. <br>
+                    I am <span class="highlight">open to learning any technology</span> that is necessary to make significant contributions.
+                </p>
+        </section>
+
+        <section class="experience hidden" id="experience">
+            <h2>Experience</h2>
+            <div class="experience-card">
+                <h3 class="experience-title">Software Development Engineer 1 - Zelthy</h3>
+                <p class="experience-date">Aug 2021 - Jul 2024 | Bengaluru, India</p>
+                <p class="text-gray-300">
+                    At Zelthy, I played a key role in <span class="highlight">backend development</span>, focusing on <span class="highlight">scalability, security, and system efficiency</span>. I developed and launched <span class="highlight">6+ applications</span> for <span class="highlight">pharmaceutical companies</span>, optimizing <span class="highlight">data accessibility and operational workflows</span>. I spearheaded <span class="highlight">version-based release management</span>, enhancing <span class="highlight">system reliability</span> and streamlining <span class="highlight">deployments</span>. Additionally, I integrated <span class="highlight">third-party services (Zoom, WhatsApp, Airwallex)</span>, expanding <span class="highlight">platform capabilities</span> and improving <span class="highlight">user engagement</span>. My contributions to <span class="highlight">multi-tenant architecture, task management, and IDE enhancements</span> significantly improved <span class="highlight">developer productivity and platform scalability</span>. 🚀
+                </p>
+            </div>
+            <div class="experience-card">
+                <h3 class="experience-title">Software Development Engineer 1 - Instahyre</h3>
+                <p class="experience-date">Aug 2024 - Sep 2024 | Remote</p>
+                <ul class="experience-list">
+                    Resolved caching issue that impacted data accuracy and fixed frontend bugs in the employer portal, enhancing user experience.
+                </ul>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact hidden" id="contact">
+            <h2>Let's Connect!</h2>
+            <p class="text-gray-300">Want to collaborate or discuss backend architecture? Let's talk.</p>
+            <div class="button-group">
+                <a href="mailto:deepak-developer@outlook.com" class="contact-button">Say Hello</a>
+                <a href="https://drive.google.com/file/d/1JNEZp9UFlqbtUNzTb6aHp8h5Ry0xzYJm/view?usp=drive_link" class="contact-button" style="background-color: var(--skill-bg); color: var(--text);">
+                    <i class="fas fa-download"></i> Download Resume
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Animation on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements sequentially
+            const elements = [
+                { id: '#theme-toggle', y: -20 },
+                { id: '#header', y: -20 },
+                { id: '#about', x: -20 },
+                { id: '#skills', y: 20 },
+                { id: '#projects', x: 20 },
+                { id: '#experience', y: 20 },
+                { id: '#contact', x: -20 }
+            ];
+            
+            elements.forEach((el, index) => {
+                anime({
+                    targets: el.id,
+                    opacity: [0, 1],
+                    translateY: el.y ? [el.y, 0] : undefined,
+                    translateX: el.x ? [el.x, 0] : undefined,
+                    duration: 500,
+                    delay: index * 150,
+                    easing: 'easeInOutQuad'
+                });
+            });
+
+            // Remove hidden class after animations are set up
+            document.querySelectorAll('.hidden').forEach(el => {
+                el.classList.remove('hidden');
+            });
+
+            // Skill card hover effect
+            document.querySelectorAll('.skill-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    anime({
+                        targets: this,
+                        scale: 1.05,
+                        duration: 200,
+                        easing: 'easeInOutQuad'
+                    });
+                });
+                card.addEventListener('mouseleave', function() {
+                    anime({
+                        targets: this,
+                        scale: 1,
+                        duration: 200,
+                        easing: 'easeInOutQuad'
+                    });
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize theme (now defaults to light)
+            const themeToggle = document.getElementById('theme-toggle');
+            const icon = themeToggle.querySelector('i');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon'); // Shows sun icon for light mode
+            
+            // Theme toggle functionality
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
